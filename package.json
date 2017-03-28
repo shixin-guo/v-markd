@@ -9,6 +9,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "highlight.js": "^9.10.0",
     "lodash": "^4.17.4",
     "markdown-it": "^8.3.1",
     "vue": "^2.2.1"
