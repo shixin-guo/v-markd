@@ -13,7 +13,9 @@
 import markdownIt from 'markdown-it';
 import _ from 'lodash';
 // let hljs = require('highlight.js'); // https://highlightjs.org/
-import hljs from 'highlight'
+import hljs from 'highlight.js';
+hljs.initHighlightingOnLoad();
+console.log(hljs);
 let md = new markdownIt({
     html: true,        // Enable HTML tags in source
     xhtmlOut: false,        // Use '/' to close single tags (<br />).
