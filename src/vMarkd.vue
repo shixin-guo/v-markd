@@ -6,7 +6,7 @@
                   v-show="showEditorView"></textarea>
     
         <div v-html="compiledMarkdown"
-             :class="{}"></div>
+            ></div>
     
     </div>
 </template>
@@ -47,13 +47,14 @@ export default {
     data() {
         return {
             content: hello,
+            previewWidth:"49%",
         }
     },
     props: {
         // false表示只有转义过的内容，不显示源文本
-        "showEditorView": {
+        showEditorView: {
             type: Boolean,
-            default: true,
+            default: 'true',
         }
     },
     computed: {
@@ -82,7 +83,7 @@ body,
 textarea,
 #editor div {
     display: inline-block;
-    width: 49%;
+    width: this.previewWidth;
     height: 100%;
     vertical-align: top;
     box-sizing: border-box;
