@@ -3,20 +3,23 @@ Welcome to V-markd
 ===================
 ### code  highlight
 
-``` python
-while True:
-    try:
-        x=input('enter the first ')
-        y=input('enter the second ')
-        value=x/y
-        print 'x/y is ',value
-    except Exception,e:
-        print 'Invalid input' ,e
-        print 'try again'
-    else :
-        break
-    finally:
-        print 'clean up ....'
+``` javascript
+var hljs = require('highlight.js'); // https://highlightjs.org/
+
+// Actual default values
+var md = require('markdown-it')({
+  highlight: function (str, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return '<pre class="hljs"><code>' +
+               hljs.highlight(lang, str, true).value +
+               '</code></pre>';
+      } catch (__) {}
+    }
+
+    return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+  }
+});
 ```
 
 

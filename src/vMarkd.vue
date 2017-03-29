@@ -76,6 +76,7 @@ body,
     margin: 0;
     height: 100%;
     color: #333;
+    font-family: "PT Sans", "Source Sans Pro", sans-serif;
 }
 
 textarea,
@@ -86,7 +87,7 @@ textarea,
     vertical-align: top;
     box-sizing: border-box;
     padding: 0 20px;
-    background-color: #fcfaf2;
+    background-color: #f6f6f6;
 }
 
 textarea {
@@ -95,13 +96,49 @@ textarea {
     resize: none;
     outline: none;
     background-color: #f6f6f6;
-    font-size: 14px;
-    font-family: 'Monaco', courier, monospace;
     padding: 20px;
+    font-size: 16px;
+    font-family: "PT Sans", sans-serif;
+    line-height: 1.65;
+    letter-spacing: normal;
+    border-radius: 0;
+    color: #5a5a5a;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    resize: none;
+    border: none;
+    background-color: #fcfcfc;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+blockquote {
+    border-left-width: 10px;
+    background-color: rgba(128, 128, 128, 0.05);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 15px 20px;
+}
+
+blockquote:before,
+blockquote:after {
+    content: "";
 }
 
 code {
-    
+    background-color: rgba(128, 128, 128, 0.075);
+    background-color: transparent;
 }
 
+a {
+    -webkit-transition: background-color ease-in-out .15s, color ease-in-out .15s, border-color ease-in-out .15s;
+    transition: background-color ease-in-out .15s, color ease-in-out .15s, border-color ease-in-out .15s;
+    color: #4fa1db;
+    text-decoration: none;
+    background: transparent;
+}
 </style>
