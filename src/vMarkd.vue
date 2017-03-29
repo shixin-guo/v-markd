@@ -88,6 +88,7 @@ textarea,
     box-sizing: border-box;
     padding: 0 20px;
     background-color: #f6f6f6;
+    overflow: scroll;
 }
 
 textarea {
