@@ -1,12 +1,12 @@
 <template>
   <div id="app">
    
-    <v-markd></v-markd>
+    <v-markd showEditorView='false'></v-markd>
   </div>
 </template>
 
 <script>
-import vMarkd from './vMarkd.vue';
+import vmarkd from './vMarkd.vue';
 export default {
   name: 'App',
   data () {
@@ -15,7 +15,7 @@ export default {
     }
   },
   components:{
-    "v-markd": vMarkd,
+    "v-markd": vmarkd,
   },
   
 }

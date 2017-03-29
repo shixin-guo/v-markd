@@ -2,69 +2,56 @@
     <div id="editor">
     
         <textarea :value="content"
-                  @input="update"></textarea>
+                  @input="update"
+                  v-show="showEditorView"></textarea>
     
         <div v-html="compiledMarkdown"
              :class="{}"></div>
     
     </div>
 </template>
+
 <script>
-import markdownIt from 'markdown-it';
+
+import hello from './assets/hello.html'
 import _ from 'lodash';
-// let hljs = require('highlight.js'); // https://highlightjs.org/
-<<<<<<< HEAD
-import hljs from 'highlight.js'
-=======
-import hljs from 'highlight.js';
+
+import markdownIt from 'markdown-it';
+import hljs from "highlight.js"
 hljs.initHighlightingOnLoad();
-console.log(hljs);
->>>>>>> bc920ce8bfa5d9bf7a36e888ee4c232e308e1356
+
 let md = new markdownIt({
-    html: true,        // Enable HTML tags in source
-    xhtmlOut: false,        // Use '/' to close single tags (<br />).
-    // This is only for full CommonMark compatibility.
-    breaks: false,        // Convert '\n' in paragraphs into <br>
-    langPrefix: 'language-',  // CSS language prefix for fenced blocks. Can be
-    // useful for external highlighters.
-    linkify: false,        // Autoconvert URL-like text to links
-
-    // Enable some language-neutral replacement + quotes beautification
+    html: true,
+    xhtmlOut: false,
+    breaks: false,
+    langPrefix: 'language-',
+    linkify: false,
     typographer: false,
-
-    // Double + single quotes replacement pairs, when typographer enabled,
-    // and smartquotes on. Could be either a String or an Array.
-    //
-    // For example, you can use '«»„“' for Russian, '„“‚‘' for German,
-    // and ['«\xA0', '\xA0»', '‹\xA0', '\xA0›'] for French (including nbsp).
     quotes: '“”‘’',
-
-    // Highlighter function. Should return escaped HTML,
-    // or '' if the source string is not changed and should be escaped externaly.
-    // If result starts with <pre... internal wrapper is skipped.
     highlight: function (str, lang) {
         if (lang && hljs.getLanguage(lang)) {
             try {
-                return hljs.highlight(lang, str).value;
+                return '<pre class="hljs"><code>' +
+                    hljs.highlight(lang, str, true).value +
+                    '</code></pre>';
             } catch (__) { }
         }
 
-        return ''; // use external default escaping
+        return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
     }
 });
 
-
-
+import "./assets/atom-one-light.css"
 export default {
+    name: "v-markd",
     data() {
         return {
-
-            content: "## Welcome to use V-markd",
+            content: hello,
         }
     },
     props: {
-        // 只有转义过的内容，不显示源文本
-        editorView: {
+        // false表示只有转义过的内容，不显示源文本
+        "showEditorView": {
             type: Boolean,
             default: true,
         }
@@ -79,8 +66,6 @@ export default {
             this.content = e.target.value
         }, 300)
     }
-
-
 }
 
 </script>
@@ -116,6 +101,7 @@ textarea {
 }
 
 code {
-    color: #f66;
+    
 }
+
 </style>

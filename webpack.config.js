@@ -20,9 +20,34 @@ module.exports = {
         }
       },
       {
+        test: /\.html$/,
+        loader: 'html-loader',
+        exclude: /node_modules/,
+        // options: {
+        //   name: '[name].[ext]?[hash]'
+        // } 
+        
+      },
+      {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+        ],
+      },
+      {
+        test: /\.useable\.css$/,
+        use: [
+          {
+            loader: "style-loader/useable"
+          },
+          { loader: "css-loader" },
+        ],
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -30,7 +55,7 @@ module.exports = {
         options: {
           name: '[name].[ext]?[hash]'
         }
-      }
+      },
     ]
   },
   resolve: {
