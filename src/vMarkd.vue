@@ -78,6 +78,7 @@ body,
     height: 100%;
     color: #333;
     font-family: "PT Sans", "Source Sans Pro", sans-serif;
+    display: flex;
 }
 
 textarea,
