@@ -5,8 +5,7 @@
                   @input="update"
                   v-show="showEditorView"></textarea>
     
-        <div v-html="compiledMarkdown"
-            ></div>
+        <div v-html="compiledMarkdown"></div>
     
     </div>
 </template>
@@ -47,7 +46,6 @@ export default {
     data() {
         return {
             content: hello,
-            previewWidth:"49%",
         }
     },
     props: {
@@ -78,12 +76,14 @@ body,
     height: 100%;
     color: #333;
     font-family: "PT Sans", "Source Sans Pro", sans-serif;
+    display: flex;
+    width: 100%;
 }
 
-textarea,
-#editor div {
+#editor >div {
     display: inline-block;
-    width: this.previewWidth;
+    flex: 1;
+    /*width: 50%;*/
     height: 100%;
     vertical-align: top;
     box-sizing: border-box;
@@ -93,6 +93,7 @@ textarea,
 }
 
 textarea {
+    flex: 1;
     border: none;
     border-right: 1px solid #ccc;
     resize: none;
