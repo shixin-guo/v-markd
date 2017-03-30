@@ -79,7 +79,7 @@ body,
     display: flex;
     width: 100%;
 }
-
+/*右边的显示栏*/
 #editor >div {
     display: inline-block;
     flex: 1;
@@ -91,7 +91,7 @@ body,
     background-color: #f6f6f6;
     overflow: scroll;
 }
-
+ /*左边的编辑栏*/
 textarea {
     flex: 1;
     border: none;
