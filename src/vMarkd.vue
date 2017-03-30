@@ -77,10 +77,7 @@ body,
     color: #333;
     font-family: "PT Sans", "Source Sans Pro", sans-serif;
     display: flex;
-<<<<<<< HEAD
-=======
     width: 100%;
->>>>>>> 518e178e72522c0f0e461d7fc22a7010b030bccb
 }
 
 #editor >div {
