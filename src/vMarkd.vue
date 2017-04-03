@@ -1,12 +1,21 @@
 <template>
-    <div id="editor">
+    <div id="app">
+        <div>
+            <div id="toolbar">
+                <input type="file">
+            </div>
+        </div>
+        <div id="editor">
+            <textarea :value="content"
+                      @input="update"
+                      v-show="showEditorView">
+                <div id="toolbar">
+                    <input type="file">
+                </div>
+            </textarea>
     
-        <textarea :value="content"
-                  @input="update"
-                  v-show="showEditorView"></textarea>
-    
-        <div v-html="compiledMarkdown"></div>
-    
+            <div v-html="compiledMarkdown"></div>
+        </div>
     </div>
 </template>
 
@@ -79,8 +88,13 @@ body,
     display: flex;
     width: 100%;
 }
+
+
+
+
 /*右边的显示栏*/
-#editor >div {
+
+#editor>div {
     display: inline-block;
     flex: 1;
     /*width: 50%;*/
@@ -91,7 +105,12 @@ body,
     background-color: #f6f6f6;
     overflow: scroll;
 }
- /*左边的编辑栏*/
+
+
+
+
+/*左边的编辑栏*/
+
 textarea {
     flex: 1;
     border: none;
@@ -143,5 +162,9 @@ a {
     color: #4fa1db;
     text-decoration: none;
     background: transparent;
+}
+
+#toolbar {
+    width: 100%;
 }
 </style>
