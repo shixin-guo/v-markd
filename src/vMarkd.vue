@@ -2,7 +2,19 @@
     <div id="app">
         <div>
             <div id="toolbar">
-                <input type="file">
+                <a href="javascript:;"
+                   class="fileButton">选择本地文件
+                                            <input type="file" class="">
+                                        </a>
+                <input type="button"
+                       value="创建新文章"
+                       id="creatButton">
+                <input type="button"
+                       value="保存"
+                       id="saveButton">
+                <input type="button"
+                       value="预览"
+                       id="previewButton">
             </div>
         </div>
         <div id="editor">
@@ -77,7 +89,7 @@ export default {
 }
 
 </script>
-<style>
+<style lang="less">
 html,
 body,
 #editor {
@@ -88,8 +100,6 @@ body,
     display: flex;
     width: 100%;
 }
-
-
 
 
 /*右边的显示栏*/
@@ -105,8 +115,6 @@ body,
     background-color: #f6f6f6;
     overflow: scroll;
 }
-
-
 
 
 /*左边的编辑栏*/
@@ -166,5 +174,34 @@ a {
 
 #toolbar {
     width: 100%;
+    .fileButton {
+        position: relative;
+        display: inline-block;
+        color: #fff;
+        background-color: #20a0ff;
+        border-color: #20a0ff;
+        line-height: 1;
+        white-space: nowrap;
+        cursor: pointer;
+        border: 1px solid #99D3F5;
+        border-radius: 4px;
+        padding: 4px 12px;
+        overflow: hidden;
+        text-decoration: none;
+        text-indent: 0;
+        line-height: 20px;
+        input {
+            position: absolute;
+            right: 0;
+            top: 0;
+            opacity: 0;
+        }
+    }
+    .fileButton:hover {
+        background: #AADFFD;
+        border-color: #78C3F3;
+        color: #004974;
+        text-decoration: none;
+    }
 }
 </style>
