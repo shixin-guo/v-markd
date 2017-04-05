@@ -4,8 +4,15 @@
             <div id="toolbar">
                 <a href="javascript:;"
                    class="fileButton">选择本地文件
+<<<<<<< HEAD
                                                 <input type="file" class="">
                                             </a>
+=======
+                            <input type="file" class="">
+                </a>
+                <input type="text"
+                       placeholder="新文章标题">
+>>>>>>> e4288b0f00fe214b24e47ca98d1b7680a647a9fa
                 <input type="button"
                        value="创建新文章"
                        id="creatButton"
@@ -16,17 +23,20 @@
                        :onclick="save">
                 <input type="button"
                        value="预览"
+<<<<<<< HEAD
                        id="previewButton"
                        :onclick="preview">
+=======
+                       id="previewButton">
+    
+>>>>>>> e4288b0f00fe214b24e47ca98d1b7680a647a9fa
             </div>
         </div>
         <div id="editor">
             <textarea :value="content"
                       @input="update"
                       v-show="showEditorView">
-                <div id="toolbar">
-                    <input type="file">
-                </div>
+    
             </textarea>
     
             <div v-html="compiledMarkdown"></div>
@@ -64,6 +74,21 @@ let md = new markdownIt({
     }
 });
 import "./assets/atom-one-light.css"
+
+// 引入firebase 以及配置文件
+import firebase from "firebase"
+import { firebaseConfig } from "./configs"
+firebase.initializeApp(firebaseConfig);
+
+// 使用firebase
+function addMarkdown(id, title, content) {
+    firebase.database().ref().set({
+        id: id,
+        title: title,
+        content: content,
+    })
+}
+addMarkdown("a", "hello", "#hello world");
 export default {
     name: "v-markd",
     data() {
@@ -91,6 +116,13 @@ export default {
         },
         save: function () {
         }
+        addMarkdown: function (title, content) {
+            firebase.database().ref().push({
+                title: this.title,
+                content: this.content,
+            })
+        },
+
     }
 }
 
@@ -107,8 +139,11 @@ body,
     width: 100%;
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> e4288b0f00fe214b24e47ca98d1b7680a647a9fa
 /*右边的显示栏*/
 
 #editor>div {
@@ -182,22 +217,14 @@ a {
 
 #toolbar {
     width: 100%;
+    height: 50px;
+    overflow: auto;
     .fileButton {
         position: relative;
         display: inline-block;
-        color: #fff;
-        background-color: #20a0ff;
-        border-color: #20a0ff;
-        line-height: 1;
-        white-space: nowrap;
-        cursor: pointer;
-        border: 1px solid #99D3F5;
-        border-radius: 4px;
-        padding: 4px 12px;
         overflow: hidden;
         text-decoration: none;
         text-indent: 0;
-        line-height: 20px;
         input {
             position: absolute;
             right: 0;
@@ -206,9 +233,6 @@ a {
         }
     }
     .fileButton:hover {
-        background: #AADFFD;
-        border-color: #78C3F3;
-        color: #004974;
         text-decoration: none;
     }
 }

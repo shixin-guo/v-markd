@@ -9,6 +9,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "firebase": "^3.7.5",
     "highlight.js": "^9.10.0",
     "less": "^2.7.2",
     "less-loader": "^4.0.3",
