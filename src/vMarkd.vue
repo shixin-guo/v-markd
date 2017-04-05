@@ -4,15 +4,11 @@
             <div id="toolbar">
                 <a href="javascript:;"
                    class="fileButton">选择本地文件
-<<<<<<< HEAD
-                                                <input type="file" class="">
-                                            </a>
-=======
-                            <input type="file" class="">
-                </a>
+                                <input type="file" class="">
+                            </a>
+    
                 <input type="text"
                        placeholder="新文章标题">
->>>>>>> e4288b0f00fe214b24e47ca98d1b7680a647a9fa
                 <input type="button"
                        value="创建新文章"
                        id="creatButton"
@@ -23,13 +19,8 @@
                        :onclick="save">
                 <input type="button"
                        value="预览"
-<<<<<<< HEAD
                        id="previewButton"
                        :onclick="preview">
-=======
-                       id="previewButton">
-    
->>>>>>> e4288b0f00fe214b24e47ca98d1b7680a647a9fa
             </div>
         </div>
         <div id="editor">
@@ -80,20 +71,12 @@ import firebase from "firebase"
 import { firebaseConfig } from "./configs"
 firebase.initializeApp(firebaseConfig);
 
-// 使用firebase
-function addMarkdown(id, title, content) {
-    firebase.database().ref().set({
-        id: id,
-        title: title,
-        content: content,
-    })
-}
-addMarkdown("a", "hello", "#hello world");
 export default {
     name: "v-markd",
     data() {
         return {
             content: hello,
+            title: "",
         }
     },
     props: {
@@ -110,12 +93,25 @@ export default {
     },
     methods: {
         update: _.debounce(function (e) {
-            this.content = e.target.value
-        }, 300),
+            if (this.title != "" && this.content !== "") {
+                this.content = e.target.value;
+                let newArticle = {
+                    title: this.title,
+                    content: this.content,
+                };
+                firebase.database().ref("article/" + this.title).update(newArticle);
+            }
+
+        }, 500),
         creat: function () {
+            this.content = "";
+            firebase.database().ref("article/" + this.title).push({
+                title: this.title,
+            })
+
         },
         save: function () {
-        }
+        },
         addMarkdown: function (title, content) {
             firebase.database().ref().push({
                 title: this.title,
@@ -139,11 +135,10 @@ body,
     width: 100%;
 }
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> e4288b0f00fe214b24e47ca98d1b7680a647a9fa
+
+
 /*右边的显示栏*/
 
 #editor>div {
@@ -157,6 +152,10 @@ body,
     background-color: #f6f6f6;
     overflow: scroll;
 }
+
+
+
+
 
 
 
