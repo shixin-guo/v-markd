@@ -4,17 +4,20 @@
             <div id="toolbar">
                 <a href="javascript:;"
                    class="fileButton">选择本地文件
-                                            <input type="file" class="">
-                                        </a>
+                                                <input type="file" class="">
+                                            </a>
                 <input type="button"
                        value="创建新文章"
-                       id="creatButton">
+                       id="creatButton"
+                       :onclick="creatMarkD">
                 <input type="button"
                        value="保存"
-                       id="saveButton">
+                       id="saveButton"
+                       :onclick="save">
                 <input type="button"
                        value="预览"
-                       id="previewButton">
+                       id="previewButton"
+                       :onclick="preview">
             </div>
         </div>
         <div id="editor">
@@ -60,7 +63,6 @@ let md = new markdownIt({
         return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
     }
 });
-
 import "./assets/atom-one-light.css"
 export default {
     name: "v-markd",
@@ -84,7 +86,11 @@ export default {
     methods: {
         update: _.debounce(function (e) {
             this.content = e.target.value
-        }, 300)
+        }, 300),
+        creat: function () {
+        },
+        save: function () {
+        }
     }
 }
 
@@ -102,6 +108,7 @@ body,
 }
 
 
+
 /*右边的显示栏*/
 
 #editor>div {
@@ -115,6 +122,7 @@ body,
     background-color: #f6f6f6;
     overflow: scroll;
 }
+
 
 
 /*左边的编辑栏*/
