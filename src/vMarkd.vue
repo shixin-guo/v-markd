@@ -3,24 +3,25 @@
         <div>
             <div id="toolbar">
                 <a href="javascript:;"
-                   class="fileButton">选择本地文件
-                                <input type="file" class="">
-                            </a>
-    
+                   class="fileButton">选择本地文件<input type="file" class=""></a>
                 <input type="text"
                        placeholder="新文章标题">
                 <input type="button"
                        value="创建新文章"
                        id="creatButton"
-                       :onclick="creatMarkD">
-                <input type="button"
+                       :onclick="creatMD">
+                <!--<input type="button"
                        value="保存"
                        id="saveButton"
-                       :onclick="save">
+                       :onclick="saveMD">
                 <input type="button"
+                       value="下载"
+                       id="saveButton"
+                       :onclick="downloadMD">-->
+                <!--<input type="button"
                        value="预览"
                        id="previewButton"
-                       :onclick="preview">
+                       :onclick="preview">-->
             </div>
         </div>
         <div id="editor">
@@ -76,7 +77,7 @@ export default {
     data() {
         return {
             content: hello,
-            title: "",
+            title: "hello",
         }
     },
     props: {
@@ -97,27 +98,22 @@ export default {
                 this.content = e.target.value;
                 let newArticle = {
                     title: this.title,
-                    content: this.content,
+                    content:JSON.parse(JSON.stringify(this.content)),
                 };
                 firebase.database().ref("article/" + this.title).update(newArticle);
+                
             }
 
         }, 500),
-        creat: function () {
+        creatMD: function () {
             this.content = "";
             firebase.database().ref("article/" + this.title).push({
                 title: this.title,
             })
+        },
+        saveMD: function () {
+        },
 
-        },
-        save: function () {
-        },
-        addMarkdown: function (title, content) {
-            firebase.database().ref().push({
-                title: this.title,
-                content: this.content,
-            })
-        },
 
     }
 }
@@ -134,11 +130,6 @@ body,
     display: flex;
     width: 100%;
 }
-
-
-
-
-
 /*右边的显示栏*/
 
 #editor>div {
@@ -153,14 +144,7 @@ body,
     overflow: scroll;
 }
 
-
-
-
-
-
-
 /*左边的编辑栏*/
-
 textarea {
     flex: 1;
     border: none;
