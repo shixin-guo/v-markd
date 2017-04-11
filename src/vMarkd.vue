@@ -9,25 +9,17 @@
                 <input type="button"
                        value="创建新文章"
                        id="creatButton"
-                       :onclick="creatMD">
-                <!--<input type="button"
-                       value="保存"
-                       id="saveButton"
-                       :onclick="saveMD">
+                       v-on:click="creatMD">
                 <input type="button"
-                       value="下载"
-                       id="saveButton"
-                       :onclick="downloadMD">-->
-                <!--<input type="button"
-                       value="预览"
-                       id="previewButton"
-                       :onclick="preview">-->
+                       value="显示旧文章"
+                       v-on:click="showOldMD">
             </div>
         </div>
         <div id="editor">
             <textarea :value="content"
                       @input="update"
-                      v-show="showEditorView">
+                      v-show="showEditorView"
+                      v-model="content">
     
             </textarea>
     
@@ -77,7 +69,7 @@ export default {
     data() {
         return {
             content: hello,
-            title: "hello",
+            title: 12,
         }
     },
     props: {
@@ -93,28 +85,46 @@ export default {
         }
     },
     methods: {
-        update: _.debounce(function (e) {
-            if (this.title != "" && this.content !== "") {
-                this.content = e.target.value;
-                let newArticle = {
-                    title: this.title,
-                    content:JSON.parse(JSON.stringify(this.content)),
-                };
-                firebase.database().ref("article/" + this.title).update(newArticle);
-                
-            }
-
-        }, 500),
+        update: function (e) {
+            let that = this;
+            setTimeout(function (e) {
+                if (that.title != "" && that.content !== "") {
+                    let newArticle = {
+                        title: 233,
+                        content: that.content,
+                    };
+                    firebase.database().ref("articles/" + that.title).update(newArticle);
+                }
+            }, 500)
+        },
         creatMD: function () {
-            this.content = "";
-            firebase.database().ref("article/" + this.title).push({
-                title: this.title,
-            })
+            let that = this;
+            function creatnew() {
+                that.content = "";
+                firebase.database().ref("articles/" + that.title).push({
+                    title: that.title,
+                });
+            }
+            setTimeout(creatnew, 500);
         },
         saveMD: function () {
         },
-
-
+        showOldMD: function () {
+            let that = this
+            firebase.database().ref("articles/" + that.title).once("value").then(function (value) {
+                //替换所有的回车换行  
+                    let string = JSON.stringify(value.val().content);
+                    try {
+                        string = string.replace(/\r\n/g, "<BR>")
+                        string = string.replace(/\n/g, "<BR>");
+                          that.content = string;
+                    } catch (e) {
+                        console.log(e.message);
+                    }
+                  
+                   
+            });
+        }
     }
 }
 
@@ -130,6 +140,10 @@ body,
     display: flex;
     width: 100%;
 }
+
+
+
+
 /*右边的显示栏*/
 
 #editor>div {
@@ -144,7 +158,11 @@ body,
     overflow: scroll;
 }
 
+
+
+
 /*左边的编辑栏*/
+
 textarea {
     flex: 1;
     border: none;
