@@ -31,8 +31,6 @@
 <script>
 
 import hello from './assets/hello.html'
-import _ from 'lodash';
-
 import markdownIt from 'markdown-it';
 import hljs from "highlight.js"
 hljs.initHighlightingOnLoad();
@@ -90,7 +88,7 @@ export default {
             setTimeout(function (e) {
                 if (that.title != "" && that.content !== "") {
                     let newArticle = {
-                        title: 233,
+                        title: "233/n",
                         content: that.content,
                     };
                     firebase.database().ref("articles/" + that.title).update(newArticle);
@@ -110,21 +108,25 @@ export default {
         saveMD: function () {
         },
         showOldMD: function () {
-            let that = this
+            var that = this
             firebase.database().ref("articles/" + that.title).once("value").then(function (value) {
-                //替换所有的回车换行  
-                    let string = JSON.stringify(value.val().content);
-                    try {
-                        string = string.replace(/\r\n/g, "<BR>")
-                        string = string.replace(/\n/g, "<BR>");
-                          that.content = string;
-                    } catch (e) {
-                        console.log(e.message);
-                    }
-                  
+                    var string = JSON.stringify(value.val().content);
+                    function TransferString(content)  
+                        {  
+                            var string = content;  
+                            try{  
+                                debugger
+                                string=string.replace(/\\r\\n/g,"<BR>").replace(/\\n/g,"<BR>")  ;//替换所有的回车换行  
+                                string=string.substring(1, string.length-1);// 去引號
+                            }catch(e) {  
+                                alert(e.message);  
+                            }  
+                            return string;  
+                        }  
+                    that.content = TransferString(string);
                    
             });
-        }
+        },
     }
 }
 
