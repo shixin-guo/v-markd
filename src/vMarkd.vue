@@ -16,12 +16,14 @@
             </div>
         </div>
         <div id="editor">
-            <textarea :value="content"
-                      @input="update"
-                      v-show="showEditorView"
-                      v-model="content">
+            <div 
+                 id="editorContent"
+                 contenteditable="true"
+                 @input="update"
+                 v-show="showEditorView"
+                 v-model="content">{{content}}
     
-            </textarea>
+            </div>
     
             <div v-html="compiledMarkdown"></div>
         </div>
@@ -110,21 +112,20 @@ export default {
         showOldMD: function () {
             var that = this
             firebase.database().ref("articles/" + that.title).once("value").then(function (value) {
-                    var string = JSON.stringify(value.val().content);
-                    function TransferString(content)  
-                        {  
-                            var string = content;  
-                            try{  
-                                debugger
-                                string=string.replace(/\\r\\n/g,"<BR>").replace(/\\n/g,"<BR>")  ;//替换所有的回车换行  
-                                string=string.substring(1, string.length-1);// 去引號
-                            }catch(e) {  
-                                alert(e.message);  
-                            }  
-                            return string;  
-                        }  
-                    that.content = TransferString(string);
-                   
+                var string = JSON.stringify(value.val().content);
+                function TransferString(content) {
+                    var string = content;
+                    try {
+                        debugger
+                        string = string.replace(/\\r\\n/g, "<BR>").replace(/\\n/g, "<BR>");//替换所有的回车换行  
+                        string = string.substring(1, string.length - 1);// 去引號
+                    } catch (e) {
+                        alert(e.message);
+                    }
+                    return string;
+                }
+                that.content = TransferString(string);
+
             });
         },
     }
@@ -142,13 +143,8 @@ body,
     display: flex;
     width: 100%;
 }
-
-
-
-
-/*右边的显示栏*/
-
 #editor>div {
+    /*右边的显示栏*/
     display: inline-block;
     flex: 1;
     /*width: 50%;*/
@@ -160,12 +156,8 @@ body,
     overflow: scroll;
 }
 
-
-
-
-/*左边的编辑栏*/
-
-textarea {
+#editorContent {
+    /*左边的编辑栏*/
     flex: 1;
     border: none;
     border-right: 1px solid #ccc;
