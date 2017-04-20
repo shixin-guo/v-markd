@@ -20,9 +20,8 @@
                       @input="update"
                       v-show="showEditorView"
                       v-model="content">
-    
-            </textarea>
-    
+            </textarea> 
+           
             <div v-html="compiledMarkdown"></div>
         </div>
     </div>
@@ -115,7 +114,6 @@ export default {
                         {  
                             var string = content;  
                             try{  
-                                debugger
                                 string=string.replace(/\\r\\n/g,"<BR>").replace(/\\n/g,"<BR>")  ;//替换所有的回车换行  
                                 string=string.substring(1, string.length-1);// 去引號
                             }catch(e) {  
