@@ -19,7 +19,8 @@
             <textarea :value="content"
                       @input="update"
                       v-show="showEditorView"
-                      v-model="content">
+                      v-model="content"
+                      id="editorContent">
             </textarea> 
             <div v-html="compiledMarkdown"></div>
         </div>
@@ -108,13 +109,11 @@ export default {
         showOldMD: function () {
             var that = this
             firebase.database().ref("articles/" + that.title).once("value").then(function (value) {
-                var string = JSON.stringify(value.val().content);
+                var string = value.val().content;
                 function TransferString(content) {
                     var string = content;
                     try {
-                        debugger
-                        string = string.replace(/\\r\\n/g, "<BR>").replace(/\\n/g, "<BR>");//替换所有的回车换行  
-                        string = string.substring(1, string.length - 1);// 去引號
+                        string = string.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n');//替换所有的回车换行  
                     } catch (e) {
                         alert(e.message);
                     }
