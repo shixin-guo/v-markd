@@ -85,7 +85,7 @@ export default {
                 }
             }, 500)
         },
-        // 增删改查
+        // 增删
 
         // 创建md firebase自动保存
         creatMD: function () {
