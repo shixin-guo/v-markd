@@ -1,29 +1,11 @@
 <template>
     <div id="app">
-        <div>
-            <div id="toolbar">
-                <a href="javascript:;"
-                   class="fileButton">选择本地文件<input type="file" class=""></a>
-                <input type="text"
-                       placeholder="新文章标题">
-                <input type="button"
-                       value="创建新文章"
-                       id="creatButton"
-                       v-on:click="creatMD">
-                <input type="button"
-                       value="显示旧文章"
-                       v-on:click="showOldMD">
-            </div>
-        </div>
-        <div id="editor">
-            <textarea :value="content"
-                      @input="update"
-                      v-show="showEditorView"
-                      v-model="content"
-                      id="editorContent">
-            </textarea> 
-            <div v-html="compiledMarkdown"></div>
-        </div>
+        <!--上面的tools-->
+        <toolbar></toolbar>
+        
+        <!--编辑器部分-->
+        <editor></editor>
+      
     </div>
 </template>
 
@@ -58,15 +40,24 @@ import "./assets/atom-one-light.css"
 
 // 引入firebase 以及配置文件
 import firebase from "firebase"
-import { firebaseConfig } from "./configs"
+import { firebaseConfig } from "./config/firebase.configs"
 firebase.initializeApp(firebaseConfig);
+
+// 引入组件
+import toolbar from './Toolbar.vue';
+import editor from './Editor.vue'
 
 export default {
     name: "v-markd",
+    components: {
+        toolbar,
+        editor,
+    },
     data() {
         return {
             content: hello,
-            title: 12,
+            title: ""||"未命名",
+            titles:""
         }
     },
     props: {
@@ -87,28 +78,35 @@ export default {
             setTimeout(function (e) {
                 if (that.title != "" && that.content !== "") {
                     let newArticle = {
-                        title: "233/n",
+                        title: that.title,
                         content: that.content,
                     };
                     firebase.database().ref("articles/" + that.title).update(newArticle);
                 }
             }, 500)
         },
+        // 增删改查
+
+        // 创建md firebase自动保存
         creatMD: function () {
             let that = this;
             function creatnew() {
                 that.content = "";
-                firebase.database().ref("articles/" + that.title).push({
+                firebase.database().ref("articles/").push({
                     title: that.title,
+                    
+
                 });
             }
             setTimeout(creatnew, 500);
         },
         saveMD: function () {
         },
-        showOldMD: function () {
+        getMD: function () {
             var that = this
             firebase.database().ref("articles/" + that.title).once("value").then(function (value) {
+                var titles = value.val().title;
+                that.titles = titles;
                 var string = value.val().content;
                 function TransferString(content) {
                     var string = content;
@@ -122,56 +120,15 @@ export default {
                 that.content = TransferString(string);
             });
         },
+        putMD: function(){
+
+        }
+        
     }
 }
 
 </script>
 <style lang="less">
-html,
-body,
-#editor {
-    margin: 0;
-    height: 100%;
-    color: #333;
-    font-family: "PT Sans", "Source Sans Pro", sans-serif;
-    display: flex;
-    width: 100%;
-}
-#editor>div {
-    /*右边的显示栏*/
-    display: inline-block;
-    flex: 1;
-    /*width: 50%;*/
-    height: 100%;
-    vertical-align: top;
-    box-sizing: border-box;
-    padding: 0 20px;
-    background-color: #f6f6f6;
-    overflow: scroll;
-}
-
-#editorContent {
-    /*左边的编辑栏*/
-    flex: 1;
-    border: none;
-    border-right: 1px solid #ccc;
-    resize: none;
-    outline: none;
-    background-color: #f6f6f6;
-    padding: 20px;
-    font-size: 16px;
-    font-family: "PT Sans", sans-serif;
-    line-height: 1.65;
-    letter-spacing: normal;
-    border-radius: 0;
-    color: #5a5a5a;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    resize: none;
-    border: none;
-    background-color: #fcfcfc;
-}
-
 tr {
     display: table-row;
     vertical-align: inherit;
@@ -204,25 +161,17 @@ a {
     background: transparent;
 }
 
-#toolbar {
-    width: 100%;
-    height: 50px;
-    overflow: auto;
-    .fileButton {
-        position: relative;
-        display: inline-block;
-        overflow: hidden;
-        text-decoration: none;
-        text-indent: 0;
-        input {
-            position: absolute;
-            right: 0;
-            top: 0;
-            opacity: 0;
+
+
+// 侧边栏
+#sidebar {
+    flex: 0.5;
+    ul {
+        li {
+            padding: 10px 15px;
+            background-color: #f6f6f6;
+            border: 1px solid rgba(0, 0, 0, 0);
         }
-    }
-    .fileButton:hover {
-        text-decoration: none;
     }
 }
 </style>
