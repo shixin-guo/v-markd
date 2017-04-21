@@ -124,7 +124,9 @@ export default {
                     }
                     return string;
                 }
-                that.content = TransferString(string);
+                // that.content = TransferString(string);
+                // that.content = string;
+                var mycontent = document.querySelector("#editorContent").innerHTML = hello;
 
             });
         },
