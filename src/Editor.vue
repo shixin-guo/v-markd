@@ -23,7 +23,8 @@ let md = new markdownIt({
     quotes: '“”‘’',
     highlight: function (str, lang) {
         if (lang && hljs.getLanguage(lang)) {
-            try {
+            try {            try {
+
                 return '<pre class="hljs"><code>' +
                     hljs.highlight(lang, str, true).value +
                     '</code></pre>';
@@ -39,20 +40,15 @@ export default {
     name : "editor",
     data(){
         return{
-            title: get_note()[0].title;
-            content : get_note[0].content;
+            title: get_note()[0].title,
+            content : get_note[0].content,
         }
-    } 
+    },
     methods: {
         ...mapMutations([
             'get_note',
             'edit_note'
-        ])
-    }
-        computed: {
-            compiledMarkdown: function () {
-                return md.render(this.content);
-        },
+        ]),
         update: function (e) {
             let that = this;
             setTimeout(function (e) {
