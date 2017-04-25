@@ -8,4 +8,4 @@
     storageBucket: "vmarkd-f3466.appspot.com",
     messagingSenderId: "669362537174"
   };
- export{ firebaseConfig}
+ export{firebaseConfig}

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
    
-    <v-markd :showEditorView="true"></v-markd>
+    <v-markd></v-markd>
   </div>
 </template>
 
@@ -9,11 +9,6 @@
 import vMarkd from './vMarkd.vue';
 export default {
   name: 'App',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  },
   components:{
     "v-markd": vMarkd,
   },

@@ -8,7 +8,86 @@
     </div>
 </template>
 <script>
+import { mapMutations } from 'vuex'
+import markdownIt from 'markdown-it'
+import hljs from "highlight.js"
+hljs.initHighlightingOnLoad()
 
+let md = new markdownIt({
+    html: true,
+    xhtmlOut: false,
+    breaks: false,
+    langPrefix: 'language-',
+    linkify: false,
+    typographer: false,
+    quotes: '“”‘’',
+    highlight: function (str, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+            try {
+                return '<pre class="hljs"><code>' +
+                    hljs.highlight(lang, str, true).value +
+                    '</code></pre>';
+            } catch (__) { }
+        }
+
+        return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
+    }
+})
+import "./assets/atom-one-light.css"
+
+export default {
+    name : "editor",
+    data(){
+        return{
+            title: get_note()[0].title;
+            content : get_note[0].content;
+        }
+    } 
+    methods: {
+        ...mapMutations([
+            'get_note',
+            'edit_note'
+        ])
+    }
+        computed: {
+            compiledMarkdown: function () {
+                return md.render(this.content);
+        },
+        update: function (e) {
+            let that = this;
+            setTimeout(function (e) {
+                if (that.title != "" && that.content !== "") {
+                    let newArticle = {
+                        title: that.title,
+                        content: that.content,
+                    };
+                    firebase.database().ref("articles/" + that.title).update(newArticle);
+                }
+            }, 500)
+        },
+      
+       
+        getMD: function () {
+            var that = this
+            firebase.database().ref("articles/" + that.title).once("value").then(function (value) {
+                var titles = value.val().title;
+                that.titles = titles;
+                var string = value.val().content;
+                function TransferString(content) {
+                    var string = content;
+                    try {
+                        string = string.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n');//替换所有的回车换行  
+                    } catch (e) {
+                        alert(e.message);
+                    }
+                    return string;
+                }
+                that.content = TransferString(string);
+            });
+        },
+        
+    }
+}
 </script>
 <style lang="less">
 // editor

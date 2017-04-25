@@ -3,12 +3,21 @@
         <div id="toolbar">
             <a href="javascript:;" class="fileButton">选择本地文件<input type="file" class=""></a>
             <input type="text" placeholder="新文章标题">
-            <input type="button" value="创建新文章" id="creatButton" @click="creatMD">
-            <input type="button" value="显示旧文章" v-on:click="">
+            <input type="button" value="创建新文章" id="creatButton" @click="add_note">
+            <input type="button" value="显示旧文章" @click="!showSidebar">
         </div>
     </div>
 </template>
 <script>
+export default{
+    name: 'sidebar',
+    data(){
+        return {
+            showsidebar:true,
+            
+        }
+    } 
+}   
 
 </script>
 <style lang="less">
