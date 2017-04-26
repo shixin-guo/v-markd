@@ -2,15 +2,10 @@
     <div id="app">
         <toolbar></toolbar>
         <editor></editor>
+        <sidebar></sidebar>
     </div>
 </template>
-
 <script>
-
-import hello from './assets/hello.html'
-
-
-
 // 引入组件
 import toolbar from './Toolbar.vue'
 import editor from './Editor.vue'

@@ -1,7 +1,7 @@
 <template>
     <div id="editor">
         <!--markdown编辑部分-->
-        <textarea id="editorContent" :value="content" @input="update" v-show="showEditorView" v-model="content">
+        <textarea id="editorContent" :value="content" @input="update" v-model="content">
         </textarea>
         <!--预览-->
         <div id="preview" v-html="compiledMarkdown"></div>
@@ -9,39 +9,18 @@
 </template>
 <script>
 import { mapMutations } from 'vuex'
-import markdownIt from 'markdown-it'
-import hljs from "highlight.js"
-hljs.initHighlightingOnLoad()
-
-let md = new markdownIt({
-    html: true,
-    xhtmlOut: false,
-    breaks: false,
-    langPrefix: 'language-',
-    linkify: false,
-    typographer: false,
-    quotes: '“”‘’',
-    highlight: function (str, lang) {
-        if (lang && hljs.getLanguage(lang)) {
-            try {            try {
-
-                return '<pre class="hljs"><code>' +
-                    hljs.highlight(lang, str, true).value +
-                    '</code></pre>';
-            } catch (__) { }
-        }
-
-        return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
-    }
-})
-import "./assets/atom-one-light.css"
-
+import md from 'config/markdown-it.configs'
 export default {
     name : "editor",
     data(){
         return{
             title: get_note()[0].title,
             content : get_note[0].content,
+        }
+    },
+    computed: {
+        compiledMarkdown: function () {
+            return md.render(this.content);
         }
     },
     methods: {
@@ -61,8 +40,6 @@ export default {
                 }
             }, 500)
         },
-      
-       
         getMD: function () {
             var that = this
             firebase.database().ref("articles/" + that.title).once("value").then(function (value) {
@@ -119,7 +96,6 @@ body,
 }
 
 /*右边的显示栏*/
-
 #preview {
     display: inline-block;
     flex: 1;
