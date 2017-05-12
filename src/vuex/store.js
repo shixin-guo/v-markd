@@ -13,6 +13,9 @@ const state = {
 }
 
 const mutations = {
+
+}
+const actions = {
     get_note (state) {
         firebase.database().ref().once('value').then(function(snapshot){
             state.note = snapshot;
@@ -37,5 +40,6 @@ const mutations = {
 }
 export default new Vuex.Store({
     state,
-    mutations
+    mutations,
+    actions
 })
