@@ -7,24 +7,17 @@
 </template>
 <script>
 // 引入组件
-import toolbar from './Toolbar.vue'
-import editor from './Editor.vue'
-import sidebar from './Sidebar.vue'
+import toolbar from './components/Toolbar.vue'
+import editor from './components/Editor.vue'
+import sidebar from './components/Sidebar.vue'
 
 export default {
     name: "v-markd",
     components: {
         toolbar,
         editor,
+        sidebar
     },
-    data() {
-        return {
-
-        }
-    },
-    props: {
-    },
-
 }
 
 </script>

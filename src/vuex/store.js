@@ -3,77 +3,71 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 // 引入firebase 以及配置文件
-import firebase from "firebase"
-import {
-    firebaseConfig
-} from "../config/firebase.configs"
-firebase.initializeApp(firebaseConfig);
+import { db } from "../config/firebase.configs"
 
-const db = firebase.database();
 const state = {
-    notes: [],
-    activeNote: []
+    notelist: db.ref("list").val(),
+    activeNote: {
+        title:"无标题",
+        content: "无内容"
+    }
 }
 const mutations= {
-    showActive(state,key){
-        activeNote.title = db.ref().child(key).title;
-        activeNote.content = db.ref().child(key).content;
+    showActive(state,title) {
+        state.activeNote.title = db.ref('post/' + title).val().title;
+        state.activeNote.content = db.ref('post/' + title).val().content;
     },
-    update(state,e) {
+    update(state,title) {
         let that = this;
         setTimeout(function (e) {
             if (that.title != "" && that.content !== "") {
                 let newArticle = {
-                    title: that.title,
-                    content: that.content,
+                    title: state.activeNote.title,
+                    content: state.activeNote.content,
                 };
-                db.ref().update(newArticle);
+                db.ref('post/' + title).update(newArticle);
             }
         }, 500)
     },
     
-},
+}
 const actions= {
-    get_note(state) {
+    get_note(context) {
         db.ref().once('value').then(function (snapshot) {
             state.note = snapshot;
         })
-        getMD: function () {
-            var that = this
-            firebase.database().ref("articles/" + that.title).once("value").then(function (value) {
-                var titles = value.val().title;
-                that.titles = titles;
-                var string = value.val().content;
+        const md = function() {
+            db.ref("articles/" + title).once("value").then(function (value) {
                 function TransferString(content) {
-                    var string = content;
                     try {
-                        string = string.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n');//替换所有的回车换行  
+                        string = content.replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n');//替换所有的回车换行  
                     } catch (e) {
                         alert(e.message);
                     }
                     return string;
                 }
+                let string = value.val().content;
                 that.content = TransferString(string);
             });
-        },
-    },
-    add_note(state, title) {
-        const newNote = {
-            title,
-            content: ""
         }
-        let key = db.ref().push().key;
-        db.ref().child(key).update(newNote);
-
-    },
-    edit_note(state,key,content) {
-        db.ref().child(key).update()
-        state.activeNote.content = content;
-    },
-    delete_note(state) {
-        state.note.$remove(state.activeNote);
-        state.activeNote = state.note[0];
     }
+    // add_note(state, title) {
+    //     const newNote = {
+    //         title,
+    //         content: ""
+    //     }
+    //     let key = db.ref().push().key;
+    //     db.ref().child(key).update(newNote);
+
+    // },
+    // edit_note(state,key,content) {
+    //     db.ref().child(key).update()
+    //     state.activeNote.content = content;
+    // },
+    // delete_note(state) {
+    //     state.note.$remove(state.activeNote);
+    //     state.activeNote = state.note[0];
+    // }
 }
 export default new Vuex.Store({
     state,

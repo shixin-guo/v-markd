@@ -1,30 +1,27 @@
 <template>
     <div id="editor">
         <!--markdown编辑部分-->
-        <textarea id="editorContent" :value="content" @input="update" v-model="content">
+        <textarea id="editorContent" :value="activeNote.content"  v-model="activeNote.content" @input="showActive">
         </textarea>
         <!--预览-->
         <div id="preview" v-html="compiledMarkdown"></div>
     </div>
 </template>
 <script>
-import { mapMutations } from 'vuex'
-import { mapAction } from 'vuex'
-import md from 'config/markdown-it.configs'
+import { mapActions ,mapMutations ,mapState} from 'vuex'
+import { md as mdrender } from './../config/markdown-it.configs'
 export default {
     name: "editor",
-    data() {
-        return {
-            title: get_note()[0].title,
-            content: get_note[0].content,
-        }
-    },
     computed: {
+        ...mapState([
+            'note',
+            'activeNote'
+        ]),
         compiledMarkdown: function () {
-            return md.render(this.content);
+            return mdrender.render(this.activeNote.content);
         }
     },
-    methods: {
+    methods: {      
         ...mapMutations([
             'update',
             'showActive'

@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-   
     <v-markd></v-markd>
   </div>
 </template>

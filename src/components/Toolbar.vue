@@ -1,14 +1,13 @@
 <template>
-    <div>
-        <div id="toolbar">
-            <a href="javascript:;" class="fileButton">选择本地文件<input type="file" class=""></a>
-            <input type="text" placeholder="新文章标题">
-            <input type="button" value="创建新文章" id="creatButton" @click="add_note">
-            <input type="button" value="显示旧文章" @click="!showSidebar">
-        </div>
+    <div id="toolbar">
+        <a href="javascript:;" class="fileButton">选择本地文件<input type="file" class=""></a>
+        <input type="text" placeholder="新文章标题">
+        <input type="button" value="创建新文章" id="creatButton" @click="add_note">
+        <input type="button" value="显示旧文章" @click="!showSidebar">
     </div>
 </template>
 <script>
+import{mapActions} from 'vuex'
 export default{
     name: 'sidebar',
     data(){
@@ -16,6 +15,11 @@ export default{
             showsidebar:true,
             
         }
+    },
+    methods:{
+        ...mapActions([
+            "add_note"
+        ])
     } 
 }   
 
