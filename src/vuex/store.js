@@ -4,29 +4,32 @@ Vue.use(Vuex)
 
 // 引入firebase 以及配置文件
 import { db } from "../config/firebase.configs"
-
+import * as demo from "../assets/demo.html" 
 const state = {
-    notelist: db.ref("list").val(),
+    list: {
+        return: db.ref("/list").once("value").then(function(snapshot){
+           return snapshot.val().list;
+        })
+    },
     activeNote: {
-        title:"无标题",
-        content: "无内容"
+        title:"",
+        content: "" || demo
     }
 }
 const mutations= {
-    showActive(state,title) {
+    getActive(state,title) {
         state.activeNote.title = db.ref('post/' + title).val().title;
         state.activeNote.content = db.ref('post/' + title).val().content;
     },
-    update(state,title) {
-        let that = this;
+    update(state,e) {
+        state.activeNote.content = e.target.value;
         setTimeout(function (e) {
-            if (that.title != "" && that.content !== "") {
                 let newArticle = {
-                    title: state.activeNote.title,
+                    // 当标题未填写时 设置为前20个字
+                    title: state.activeNote.title || state.activeNote.content.substr(0,20).replace(/\n/g,""),
                     content: state.activeNote.content,
                 };
-                db.ref('post/' + title).update(newArticle);
-            }
+                db.ref('posts/' + newArticle.title).update(newArticle);
         }, 500)
     },
     

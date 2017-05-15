@@ -22,6 +22,9 @@ export default {
 
 </script>
 <style lang="less">
+*{
+     font-family: "PT Sans", "Source Sans Pro", sans-serif;
+}
 tr {
     display: table-row;
     vertical-align: inherit;

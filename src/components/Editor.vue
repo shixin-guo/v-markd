@@ -1,8 +1,10 @@
 <template>
     <div id="editor">
         <!--markdown编辑部分-->
-        <textarea id="editorContent" :value="activeNote.content"  v-model="activeNote.content" @input="showActive">
-        </textarea>
+        <div id="note">
+            <input type="text" placeholder="写下标题" class="title"></input>        
+            <textarea id="editorContent" :value="activeNote.content" v-model="activeNote.content" @click="update"></textarea>
+        </div>
         <!--预览-->
         <div id="preview" v-html="compiledMarkdown"></div>
     </div>
@@ -24,7 +26,7 @@ export default {
     methods: {      
         ...mapMutations([
             'update',
-            'showActive'
+            'getActive'
         ]),
     }
 }
@@ -43,8 +45,23 @@ body,
 }
 
 /*左边的编辑栏*/
-#editorContent {
+#note{
     flex: 1;
+    .title{
+        background: none;
+        border: none;
+        padding: 0;
+        width: 50%;      
+        font-size: 28px;
+        line-height: 2;
+        padding-left: 40px;
+    }
+    
+}
+#editorContent {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
     border: none;
     border-right: 1px solid #ccc;
     resize: none;

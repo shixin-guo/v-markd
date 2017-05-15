@@ -1,9 +1,9 @@
 <template>
     <div id="toolbar">
-        <a href="javascript:;" class="fileButton">选择本地文件<input type="file" class=""></a>
+        <!--<a href="javascript:;" class="fileButton">选择本地文件<input type="file" class=""></a>
         <input type="text" placeholder="新文章标题">
         <input type="button" value="创建新文章" id="creatButton" @click="add_note">
-        <input type="button" value="显示旧文章" @click="!showSidebar">
+        <input type="button" value="显示旧文章" @click="!showSidebar">-->
     </div>
 </template>
 <script>
@@ -25,7 +25,7 @@ export default{
 
 </script>
 <style lang="less">
-#toolbar {
+.toolbar {
     width: 100%;
     height: 50px;
     overflow: auto;
@@ -45,5 +45,6 @@ export default{
     .fileButton:hover {
         text-decoration: none;
     }
+    
 }
 </style>
