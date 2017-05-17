@@ -17,34 +17,38 @@ const state = {
     }
 }
 const mutations= {
+    updateContent(state,e) {
+        if(!state.activeNote.title){
+            state.activeNote.content = e.target.value;
+            // 当标题未填写时 设置为前20个字            
+            state.activeNote.title = state.activeNote.content.substr(0,20).replace(/\n/g,"")
+            console.log(state.activeNote.title)
+        }
+        function debounce(method, context){
+            clearTimeout(method.timeout);
+            method.timeout = setTimeout(function (e) {
+                    let newArticle = {
+                        title: state.activeNote.title ,
+                        content: state.activeNote.content,
+                    };
+                    db.ref('posts/' + state.activeNote.title).update(newArticle);
+            }, 500)
+        }
+    },
+    updateTitle(state, e) {
+        let title = e.target.value
+        if(title){
+            setTimeout(function (e) {
+                db.ref("posts/" + state.activeNote.title).remove();
+                state.activeNote.title = title;
+                db.ref("posts/" + state.activeNote.title).update(state.activeNote)
+            }, 1000)
+        }
+    },
     getActive(state,title) {
         state.activeNote.title = db.ref('post/' + title).val().title;
         state.activeNote.content = db.ref('post/' + title).val().content;
     },
-    updateContent(state,e) {
-        if(!state.activeNote.title){
-            state.activeNote.content = e.target.value;
-            state.activeNote.title = state.activeNote.content.substr(0,20).replace(/\n/g,"")
-        }
-        setTimeout(function (e) {
-                let newArticle = {
-                    // 当标题未填写时 设置为前20个字
-                    title: state.activeNote.title ,
-                    content: state.activeNote.content,
-                };
-                db.ref('posts/' + state.activeNote.title).update(newArticle);
-        }, 500)
-    },
-    updateTitle(state, e) {
-        let title = e.target.value
-        state.activeNote.title = title;
-        if(state.activeNote.title){
-            setTimeout(function (e) {
-                db.ref("posts/" + state.activeNote.title).remove();
-                db.ref("posts/" + state.activeNote.title).update(state.activeNote)
-            }, 1000)
-        }
-    }
     
 }
 const actions= {
