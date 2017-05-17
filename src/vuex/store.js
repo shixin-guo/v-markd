@@ -13,7 +13,7 @@ const state = {
     },
     activeNote: {
         title:"",
-        content: "" || demo
+        content: ""
     }
 }
 const mutations= {
@@ -21,17 +21,30 @@ const mutations= {
         state.activeNote.title = db.ref('post/' + title).val().title;
         state.activeNote.content = db.ref('post/' + title).val().content;
     },
-    update(state,e) {
-        state.activeNote.content = e.target.value;
+    updateContent(state,e) {
+        if(!state.activeNote.title){
+            state.activeNote.content = e.target.value;
+            state.activeNote.title = state.activeNote.content.substr(0,20).replace(/\n/g,"")
+        }
         setTimeout(function (e) {
                 let newArticle = {
                     // 当标题未填写时 设置为前20个字
-                    title: state.activeNote.title || state.activeNote.content.substr(0,20).replace(/\n/g,""),
+                    title: state.activeNote.title ,
                     content: state.activeNote.content,
                 };
-                db.ref('posts/' + newArticle.title).update(newArticle);
+                db.ref('posts/' + state.activeNote.title).update(newArticle);
         }, 500)
     },
+    updateTitle(state, e) {
+        let title = e.target.value
+        state.activeNote.title = title;
+        if(state.activeNote.title){
+            setTimeout(function (e) {
+                db.ref("posts/" + state.activeNote.title).remove();
+                db.ref("posts/" + state.activeNote.title).update(state.activeNote)
+            }, 1000)
+        }
+    }
     
 }
 const actions= {
@@ -53,16 +66,16 @@ const actions= {
                 that.content = TransferString(string);
             });
         }
-    }
-    // add_note(state, title) {
-    //     const newNote = {
-    //         title,
-    //         content: ""
-    //     }
-    //     let key = db.ref().push().key;
-    //     db.ref().child(key).update(newNote);
+    },
+    add_note(content) {
+        const newNote = {
+            title,
+            content: ""
+        }
+        let key = db.ref().push().key;
+        db.ref().child(key).update(newNote);
 
-    // },
+    },
     // edit_note(state,key,content) {
     //     db.ref().child(key).update()
     //     state.activeNote.content = content;

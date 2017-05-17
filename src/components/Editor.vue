@@ -2,8 +2,15 @@
     <div id="editor">
         <!--markdown编辑部分-->
         <div id="note">
-            <input type="text" placeholder="写下标题" class="title"></input>        
-            <textarea id="editorContent" :value="activeNote.content" v-model="activeNote.content" @click="update"></textarea>
+            <input type="text" placeholder="写下标题" class="title" 
+                @input = "(e) => {setTimeout(updateTitle(e),1000)}"
+                :value = "activeNote.title">
+            </input>        
+            <textarea id="editorContent" 
+                :value="activeNote.content" 
+                v-model="activeNote.content" 
+                @input="updateContent">
+            </textarea>
         </div>
         <!--预览-->
         <div id="preview" v-html="compiledMarkdown"></div>
@@ -25,7 +32,8 @@ export default {
     },
     methods: {      
         ...mapMutations([
-            'update',
+            'updateTitle',
+            'updateContent',
             'getActive'
         ]),
     }
@@ -43,7 +51,17 @@ body,
     display: flex;
     width: 100%;
 }
-
+@placeholderColor: #2dbe60;
+*::-webkit-input-placeholder {
+    color: @placeholderColor;
+}
+*:-moz-placeholder {    
+    color: @placeholderColor;
+}
+*:-ms-input-placeholder {
+    /* IE10+ */
+    color: @placeholderColor;
+}
 /*左边的编辑栏*/
 #note{
     flex: 1;
@@ -51,34 +69,34 @@ body,
         background: none;
         border: none;
         padding: 0;
-        width: 50%;      
         font-size: 28px;
         line-height: 2;
         padding-left: 40px;
+        outline: none;
     }
-    
+    #editorContent {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-right: 1px solid #ccc;
+        resize: none;
+        outline: none;
+        padding: 20px;
+        font-size: 16px;
+        font-family: "PT Sans", sans-serif;
+        line-height: 1.65;
+        letter-spacing: normal;
+        border-radius: 0;
+        color: #5a5a5a;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        resize: none;
+        border: none;
+        background-color: #fcfcfc;
+    }
 }
-#editorContent {
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-right: 1px solid #ccc;
-    resize: none;
-    outline: none;
-    padding: 20px;
-    font-size: 16px;
-    font-family: "PT Sans", sans-serif;
-    line-height: 1.65;
-    letter-spacing: normal;
-    border-radius: 0;
-    color: #5a5a5a;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    resize: none;
-    border: none;
-    background-color: #fcfcfc;
-}
+
 /*右边的显示栏*/
 #preview {
     display: inline-block;
