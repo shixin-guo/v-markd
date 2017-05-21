@@ -25,6 +25,9 @@ export default {
 *{
      font-family: "PT Sans", "Source Sans Pro", sans-serif;
 }
+body{
+    height: 100%;
+}
 tr {
     display: table-row;
     vertical-align: inherit;

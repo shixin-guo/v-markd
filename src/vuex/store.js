@@ -5,6 +5,14 @@ Vue.use(Vuex)
 // 引入firebase 以及配置文件
 import { db } from "../config/firebase.configs"
 import * as demo from "../assets/demo.html" 
+
+// 函数去抖
+function debounce(method, content){
+    clearTimeout(method.tId);
+    method.tId = setTimeout(function(){
+        method.call(content);
+    },500);
+}
 const state = {
     list: {
         return: db.ref("/list").once("value").then(function(snapshot){
@@ -24,21 +32,27 @@ const mutations= {
             state.activeNote.title = state.activeNote.content.substr(0,20).replace(/\n/g,"")
             console.log(state.activeNote.title)
         }
-        function debounce(method, context){
-            clearTimeout(method.timeout);
-            method.timeout = setTimeout(function (e) {
-                    let newArticle = {
-                        title: state.activeNote.title ,
-                        content: state.activeNote.content,
-                    };
-                    db.ref('posts/' + state.activeNote.title).update(newArticle);
-            }, 500)
+        // 函数去抖
+        function debounce(method, content){
+            clearTimeout(method.tId);
+            method.tId = setTimeout(
+                method()
+            ,500);
         }
+        const method = function(){
+            let newArticle = {
+                title: state.activeNote.title ,
+                content: state.activeNote.content,
+            };
+            db.ref('posts/' + state.activeNote.title).update(newArticle);
+        }
+        debounce(method);
     },
     updateTitle(state, e) {
         let title = e.target.value
         if(title){
-            setTimeout(function (e) {
+            clearTimeout(time)
+            var time = setTimeout(function (e) {
                 db.ref("posts/" + state.activeNote.title).remove();
                 state.activeNote.title = title;
                 db.ref("posts/" + state.activeNote.title).update(state.activeNote)
@@ -76,9 +90,6 @@ const actions= {
             title,
             content: ""
         }
-        let key = db.ref().push().key;
-        db.ref().child(key).update(newNote);
-
     },
     // edit_note(state,key,content) {
     //     db.ref().child(key).update()

@@ -2,10 +2,6 @@
     <div id="editor">
         <!--markdown编辑部分-->
         <div id="note">
-            <input type="text" placeholder="写下标题" class="title" 
-                @input = "(e) => {setTimeout(updateTitle(e),1000)}"
-                :value = "activeNote.title">
-            </input>        
             <textarea id="editorContent" 
                 :value="activeNote.content" 
                 v-model="activeNote.content" 
@@ -45,7 +41,7 @@ html,
 body,
 #editor {
     margin: 0;
-    height: 100%;
+    height: 95%;
     color: #333;
     font-family: "PT Sans", "Source Sans Pro", sans-serif;
     display: flex;
@@ -64,16 +60,7 @@ body,
 }
 /*左边的编辑栏*/
 #note{
-    flex: 1;
-    .title{
-        background: none;
-        border: none;
-        padding: 0;
-        font-size: 28px;
-        line-height: 2;
-        padding-left: 40px;
-        outline: none;
-    }
+    flex: 1;  
     #editorContent {
         box-sizing: border-box;
         width: 100%;
