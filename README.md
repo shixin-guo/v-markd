@@ -73,31 +73,7 @@ markdown code 部分语法高亮
 - firebase 功能实现设计效果
 - atom 的css 复用
 
-
-
-## Build Setup
-- node npm 安装
-- git (可选)
-- 注册[firebase](https://firebase.google.com/?hl=zh-cn)
-- 新建网页项目,复制代码到 src/config/firebase.configs.js 里面就可以使用firebase数据库了, 不需要安装mysql mongo这些繁琐的数据库
-
-
-``` bash
-# download code
-git clone git@github.com:gzponline/v-markd.git
-cd v-markd
-
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-```
-
 ##　开发过程遇到的问题以及解决方案
-[vuex 单向数据流 偶遇 v-model 双向绑定](https://github.com/gzponline/v-markd/issues/3)
-[js 函数去抖 函数节流](https://github.com/gzponline/v-markd/issues/4)
-[js 捕获光标位置](https://github.com/gzponline/v-markd/issues/6)
+- [vuex 单向数据流 偶遇 v-model 双向绑定](https://github.com/gzponline/v-markd/issues/3)
+- [js 函数去抖 函数节流](https://github.com/gzponline/v-markd/issues/4)
+- [js 捕获光标位置](https://github.com/gzponline/v-markd/issues/6)
