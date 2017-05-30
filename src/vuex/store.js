@@ -77,7 +77,7 @@ const mutations= {
     },
     addNote(state) {
         db.ref("lists").once('value').then(function (snapshot) {
-                var num_note = snapshot.val().length; 
+                let num_note = snapshot.val().length; 
                 console.log(snapshot.val().length)
                 state.activeNote = {title: "不给笔记起个好听的名字吗",content: "yyuyu",index:num_note};
                 db.ref("lists/" + num_note).set(state.activeNote)
