@@ -19,7 +19,7 @@ export default {
     name: "editor",
     computed: {
         ...mapState([
-            'note',
+            'list',
             'activeNote'
         ]),
         compiledMarkdown: function () {

@@ -1,16 +1,13 @@
 <template>
     <div id="toolbar">
-        <!--<a href="javascript:;" class="fileButton">选择本地文件<input type="file" class=""></a>
-        <input type="text" placeholder="新文章标题">
-        <input type="button" value="创建新文章" id="creatButton" @click="add_note">
-        <input type="button" value="显示旧文章" @click="!showSidebar">-->
         <input type="text" placeholder="写下标题" class="title" 
             @input = "updateTitle"
+            v-model = "activeNote.title"
             :value = "activeNote.title">
         </input>
         <div>
             <img class = "addNote" src = "../assets/addNote.png" 
-            @click = "add_note">
+            @click = "addNote">
         </div>
     </div>
 </template>
@@ -26,14 +23,14 @@ export default{
     },
     methods:{
          ...mapState([
-            'note', 
+            'list', 
             'activeNote'
         ]),
         ...mapMutations([
-            'updateTitle'
-        ]),
-        ...mapActions([
-            'add_note'
+            'updateTitle',
+            'addNote',
+            'getList',
+            'delateNote'
         ])
     } 
 }   

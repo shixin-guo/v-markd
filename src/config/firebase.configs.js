@@ -1,5 +1,5 @@
 import firebase from "firebase"
-
+import demo from "../assets/demo.html"
 // Initialize Firebase
 let firebaseConfig = {
   apiKey: "AIzaSyDxnfFujjZQb4dvOVvV8pEBMXPPgXkCyJE",
@@ -12,4 +12,13 @@ let firebaseConfig = {
 // 引入firebase 以及配置文件
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
+// 初始化数据
+let initdate = {content : demo,title : 'markdown 介绍', index : "0"}
+db.ref("demo").update(
+  initdate
+)
+let list = 
+db.ref('lists/'+ '0').set(
+  initdate
+)
 export{ db }

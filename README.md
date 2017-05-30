@@ -72,6 +72,7 @@ markdown code 部分语法高亮
 - 组件化
 - firebase 功能实现设计效果
 - atom 的css 复用
+- alert 弹窗设计 复用3221
 
 ##　开发过程遇到的问题以及解决方案
 - [vuex 单向数据流 偶遇 v-model 双向绑定](https://github.com/gzponline/v-markd/issues/3)
