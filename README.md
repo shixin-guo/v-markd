@@ -1,11 +1,11 @@
-# 
+
 <div align="center">
-  <big>
-    <h1>v-markd</h1>
-  </big>
+	<big>
+		<h1>v-markd</h1>
+	</big>
 </div>
 
-> a compoment by Vue.js  a markdown editor 
+> a compoment by Vue.js  a markdown editor
 
 ## Build Setup
 - node npm 安装
@@ -32,15 +32,15 @@ npm run build
 ## Thanks  
 - [Vue.js](https://cn.vuejs.org/)  
 主要基于vue的组件化开发 实现在所有vue工程里面只需要引用v-mark 就可以实现添加编辑器的功能，同时也使用了vue的数据绑定特点，使前端想象力更简洁清晰的表达。
-- [vuex](https://vuex.vuejs.org/zh-cn/intro.html) 
-vuex 是vue的状态管理框架，由于使用vuex是因为单纯使用vue的话data 数据很多，不好管理，同时各个组件同时使用更改数据状态时会使整个开发思路异常纠结，思路不清晰，组件间通信会异常繁琐，vuex把需要共享的状态单独交给store 通过mutation getter方式修改state， action 异步触发（使用commit） mutation，实现单向数据流。当后期状态修改方法增多，触发方式变多时候很方便管理状态 
+- [vuex](https://vuex.vuejs.org/zh-cn/intro.html)
+vuex 是vue的状态管理框架，由于使用vuex是因为单纯使用vue的话data 数据很多，不好管理，同时各个组件同时使用更改数据状态时会使整个开发思路异常纠结，思路不清晰，组件间通信会异常繁琐，vuex把需要共享的状态单独交给store 通过mutation getter方式修改state， action 异步触发（使用commit） mutation，实现单向数据流。当后期状态修改方法增多，触发方式变多时候很方便管理状态
 - [firebase](https://firebase.google.com/?hl=zh-cn)
  数据实时保存，可视化管理，简化数据库操作，简化开发。
 - [hightlight](https://www.npmjs.com/package/highlight.js)  
 markdown code 部分语法高亮
-- [markdown-it](https://www.npmjs.com/package/markdown-it) 
-对markdown 格式内容进行转换为html 
-- [stack editor](https://stackedit.io/editor) 
+- [markdown-it](https://www.npmjs.com/package/markdown-it)
+对markdown 格式内容进行转换为html
+- [stack editor](https://stackedit.io/editor)
 主要参考案例
 
 ## 主要解决问题
@@ -55,7 +55,7 @@ markdown code 部分语法高亮
 - 分屏同步滚动
 ### 需要加的功能
 
-- 图片黏贴
+- 图片黏贴   
 - 预览与编辑区同步滚动
 - 离线保存
 - 动态保存
@@ -74,7 +74,7 @@ markdown code 部分语法高亮
 - atom 的css 复用
 - alert 弹窗设计 复用3221
 
-##　开发过程遇到的问题以及解决方案
+## 开发过程遇到的问题以及解决方案
 - [vuex 单向数据流 偶遇 v-model 双向绑定](https://github.com/gzponline/v-markd/issues/3)
 - [js 函数去抖 函数节流](https://github.com/gzponline/v-markd/issues/4)
 - [js 捕获光标位置](https://github.com/gzponline/v-markd/issues/6)
