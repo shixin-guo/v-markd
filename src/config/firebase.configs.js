@@ -11,6 +11,7 @@ let firebaseConfig = {
 };
 // 引入firebase 以及配置文件
 firebase.initializeApp(firebaseConfig);
+// 配置数据库
 const db = firebase.database();
 // 初始化数据
 let initdate = {content : demo,title : 'markdown 介绍', index : "0"}
@@ -21,4 +22,9 @@ let list =
 db.ref('lists/'+ '0').set(
   initdate
 )
-export{ db }
+
+// 配置文件资源存储
+const storage = firebase.storage();
+
+
+export{ db , storage}
