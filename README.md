@@ -78,3 +78,7 @@ markdown code 部分语法高亮
 - [vuex 单向数据流 偶遇 v-model 双向绑定](https://github.com/gzponline/v-markd/issues/3)
 - [js 函数去抖 函数节流](https://github.com/gzponline/v-markd/issues/4)
 - [js 捕获光标位置](https://github.com/gzponline/v-markd/issues/6)
+
+
+** 不兼容ie ** 
+

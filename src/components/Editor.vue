@@ -15,6 +15,8 @@
 <script>
 import { mapActions ,mapMutations ,mapState} from 'vuex'
 import { md as mdrender } from './../config/markdown-it.configs'
+import {myfirebase} from './../config/firebase.configs'
+import firebase from "firebase"
 export default {
     name: "editor",
     computed: {
@@ -32,6 +34,105 @@ export default {
             'updateContent',
             'getActive'
         ]),
+    },
+    mounted: function(){
+        function insertAtCursor(myField, myValue) {
+            //IE support
+            if (document.selection) 
+            {
+                myField.focus();
+                sel = document.selection.createRange();
+                sel.text = myValue;
+                sel.select();
+            }
+            //MOZILLA/NETSCAPE support
+            else if (myField.selectionStart || myField.selectionStart == '0') 
+            {
+                console.log(1)
+                var startPos = myField.selectionStart;
+                var endPos = myField.selectionEnd;
+                // save scrollTop before insert
+                var restoreTop = myField.scrollTop;
+                myField.value = myField.value.substring(0, startPos) + myValue + myField.value.substring(endPos, myField.value.length);
+                if (restoreTop > 0)
+                {
+                    // restore previous scrollTop
+                    myField.scrollTop = restoreTop;
+                }
+                myField.focus();
+                myField.selectionStart = startPos + myValue.length;
+                myField.selectionEnd = startPos + myValue.length;
+            } else {
+                console.log(myField)
+                myField.value += myValue;
+                myField.focus();
+            }
+        }
+        let textarea = document.getElementById("editorContent");  
+        textarea.addEventListener('paste', function(e){
+            // 阻止默认行为
+            window.event? window.event.returnValue = false : e.preventDefault();
+            let clipboard = e.clipboardData;
+            // 有无内容
+            if(!clipboard.items || !clipboard.items.length){
+                clear();
+                return;
+            }
+            let temp;
+            if((temp = clipboard.items[0]) && temp.kind === 'file' && temp.type.indexOf('image') === 0){
+                // 获取图片文件
+                let imgFile = temp.getAsFile();
+                // 上传firebase
+                let timestamp = new Date().getTime();
+                let storageRef = myfirebase.storage().ref('images/' + timestamp)
+                let uploadTask = storageRef.put(imgFile);
+                uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, function(snapshot){
+                    let progress = (snapshot.bytesTransferred / snapshot.totalBytes)* 100;
+                    console.log('Upload is ' + progress + '% done')
+                    switch (snapshot.state){
+                        case firebase.storage.TaskState.PAUSED:
+                            console.log("Upload is pause");
+                            break;
+                        case firebase.storage.TaskState.RUNNING:
+                            console.log("Upload is running");
+                            break;
+                    }
+                }, function(error){
+                    // error handle
+                    switch (error.code) {
+                        case 'storage/unauthorized':
+                            console.log("未开启此项目对storage的firebase权限");
+                            break;
+                        case 'storage/conceled':
+                            console.log(" 您已经取消此次上传");
+                            break;
+                        case 'storge/unknown':
+                            console.log("未知错误");
+                            break;
+                    }
+                }, function(){
+                    // success
+                    console.log("上传成功")
+                    // 获取链接
+                    let downloadURL = uploadTask.snapshot.downloadURL;
+                    console.log(downloadURL);
+                    // 格式化markdown图片格式 并添加到光标位置
+                    // 在光标位置插入
+                    let picURL = "![" + (name || "") + "](" + downloadURL+  ")"
+                    insertAtCursor(textarea, picURL)
+                })
+            } else if(temp = clipboard.getData('text/plain')){
+                // 将文本预格式化
+                // var splitList = temp.split(/\n/);
+                // temp = '';
+                // for(var i = 0, len = splitList.length; i < len; i++){
+                //     temp += splitList[i].replace(/\t/g, '&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;')
+                //         .replace(/ /g, '&amp;nbsp;') + '&lt;br&gt;';
+                // }
+                // // TODO: 做爱做的事
+                insertAtCursor(textarea, temp)
+            }
+        }, false);
     }
 }
 </script>
@@ -81,6 +182,7 @@ body,
         resize: none;
         border: none;
         background-color: #fcfcfc;
+       
     }
 }
 
@@ -95,5 +197,9 @@ body,
     padding: 0 20px;
     background-color: #f6f6f6;
     overflow: scroll;
+    img{
+        display: inherit;
+        margin: 0 auto;
+    }
 }
 </style>

@@ -41,7 +41,6 @@ const mutations= {
             state.activeNote.content = e.target.value;
             // 当标题未填写时 设置为前20个字            
             state.activeNote.title = state.activeNote.content.substr(0,20).replace(/\n/g,"")
-            console.log(state.activeNote.title)
         }
         // const method = function(){
             let newArticle = {
@@ -78,7 +77,6 @@ const mutations= {
     addNote(state) {
         db.ref("lists").once('value').then(function (snapshot) {
                 let num_note = snapshot.val().length; 
-                console.log(snapshot.val().length)
                 state.activeNote = {title: "不给笔记起个好听的名字吗",content: "yyuyu",index:num_note};
                 db.ref("lists/" + num_note).set(state.activeNote)
         })

@@ -10,21 +10,19 @@ let firebaseConfig = {
   messagingSenderId: "669362537174"
 };
 // 引入firebase 以及配置文件
-firebase.initializeApp(firebaseConfig);
+let myfirebase = firebase.initializeApp(firebaseConfig);
 // 配置数据库
-const db = firebase.database();
+const db = myfirebase.database();
 // 初始化数据
 let initdate = {content : demo,title : 'markdown 介绍', index : "0"}
 db.ref("demo").update(
   initdate
 )
-let list = 
-db.ref('lists/'+ '0').set(
+let list = db.ref('lists/'+ '0').set(
   initdate
 )
 
 // 配置文件资源存储
-const storage = firebase.storage();
+let storage = app.storage;
 
-
-export{ db , storage}
+export{ db , myfirebase }
