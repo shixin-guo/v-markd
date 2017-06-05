@@ -49,10 +49,10 @@ export default {
             else if (myField.selectionStart || myField.selectionStart == '0') 
             {
                 console.log(1)
-                var startPos = myField.selectionStart;
-                var endPos = myField.selectionEnd;
+                let startPos = myField.selectionStart;
+                let endPos = myField.selectionEnd;
                 // save scrollTop before insert
-                var restoreTop = myField.scrollTop;
+                let restoreTop = myField.scrollTop;
                 myField.value = myField.value.substring(0, startPos) + myValue + myField.value.substring(endPos, myField.value.length);
                 if (restoreTop > 0)
                 {
@@ -122,14 +122,6 @@ export default {
                     insertAtCursor(textarea, picURL)
                 })
             } else if(temp = clipboard.getData('text/plain')){
-                // 将文本预格式化
-                // var splitList = temp.split(/\n/);
-                // temp = '';
-                // for(var i = 0, len = splitList.length; i < len; i++){
-                //     temp += splitList[i].replace(/\t/g, '&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;')
-                //         .replace(/ /g, '&amp;nbsp;') + '&lt;br&gt;';
-                // }
-                // // TODO: 做爱做的事
                 insertAtCursor(textarea, temp)
             }
         }, false);
@@ -185,7 +177,6 @@ body,
        
     }
 }
-
 /*右边的显示栏*/
 #preview {
     display: inline-block;

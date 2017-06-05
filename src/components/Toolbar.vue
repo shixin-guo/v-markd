@@ -8,6 +8,8 @@
         <div>
             <img class = "addNote" src = "../assets/addNote.png" 
             @click = "addNote">
+            <img class = "list" src = "../assets/list.png" 
+            @click = "getList">
         </div>
     </div>
 </template>
@@ -52,7 +54,7 @@ export default{
         padding-left: 40px;
         outline: none;
     }
-    .addNote{
+    .addNote, .list{
         float: right;
         margin-right: 20px;
         margin-top: 5px;

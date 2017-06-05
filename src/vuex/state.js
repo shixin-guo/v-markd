@@ -1,11 +1,8 @@
 const state = {
-    list: {
-        return: db.ref("/list").once("value").then(function(snapshot){
-           return snapshot.val().list;
-        })
-    },
+    lists:[],
     activeNote: {
-        title:"",
+        index: "" || 0,
+        title: "",
         content: ""
     }
 }

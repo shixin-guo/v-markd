@@ -25,4 +25,4 @@ let list = db.ref('lists/'+ '0').set(
 // 配置文件资源存储
 let storage = app.storage;
 
-export{ db , myfirebase }
+export{ db , myfirebase}
