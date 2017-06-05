@@ -10,6 +10,11 @@
         </div>
         <!--预览-->
         <div id="preview" v-html="compiledMarkdown"></div>
+        <div id= "lists" v-show = "true" >
+            <ul>
+                <li v-for = "item in lists">{{item}}</li>
+            </ul>
+        </div>
     </div>
 </template>
 <script>
@@ -21,7 +26,7 @@ export default {
     name: "editor",
     computed: {
         ...mapState([
-            'list',
+            'lists',
             'activeNote'
         ]),
         compiledMarkdown: function () {
@@ -134,7 +139,7 @@ html,
 body,
 #editor {
     margin: 0;
-    height: 95%;
+    height: 97%;
     color: #333;
     font-family: "PT Sans", "Source Sans Pro", sans-serif;
     display: flex;
@@ -191,6 +196,29 @@ body,
     img{
         display: inherit;
         margin: 0 auto;
+    }
+    p { word-wrap:break-word; }
+}
+ul{
+    margin:0;
+    padding:0;
+    border:0;
+}
+#lists{
+    flex: 1;
+    li{
+        color: #3f3f3f;
+        list-style-type:none;
+        height: 3rem;
+        border-bottom: 2px solid #d9d9d9;
+        line-height: 3.2;
+        padding-left: 30px;
+        padding-right: 30px; 
+        // margin-left: 1rem ;
+    }
+    li:hover{
+        background:rgba(134, 127, 127, 0.22);
+        color:#2dbe60;
     }
 }
 </style>

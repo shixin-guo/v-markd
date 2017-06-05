@@ -45,10 +45,10 @@ const mutations= {
     },
     getList(state) {
         db.ref("lists").once('value').then(function (snapshot) {
+            state.lists =[];
             for (let index in snapshot.val()){
                 state.lists.push(snapshot.val()[index].title)
             }
-            console.log(state.lists)
         })
     },
     addNote(state) {

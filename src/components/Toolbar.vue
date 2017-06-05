@@ -42,7 +42,7 @@ export default{
 #toolbar {
     background-color: #f8f8f8;
     width: 100%;
-    height: 5%;
+    // height: 5%;
     overflow: hidden;
     input,.title{
         float: left;
