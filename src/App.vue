@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="myapp">
     <v-markd></v-markd>
   </div>
 </template>
@@ -14,10 +14,8 @@ export default {
   
 }
 </script>
-
 <style>
-#app{
+#myapp{
   width: 100%;
-  height: 100%;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" v-bind:style="{ height: this.clientHeight }">
         <toolbar></toolbar>
         <editor></editor>
         <sidebar></sidebar>
@@ -10,7 +10,8 @@
 import toolbar from './components/Toolbar.vue'
 import editor from './components/Editor.vue'
 import sidebar from './components/Sidebar.vue'
-
+// let clientHeight = document.body.clientHeight;
+let cqlientHeight = window.innerHeight;
 export default {
     name: "v-markd",
     components: {
@@ -18,6 +19,9 @@ export default {
         editor,
         sidebar
     },
+    data: function(){
+        return {clientHeight:cqlientHeight}
+    }
 }
 
 </script>
