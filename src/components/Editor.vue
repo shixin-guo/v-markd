@@ -1,25 +1,26 @@
 <template>
-<div id="containor">
-    <div id = "hoverdiv" ></div>
-    <div id="editor">
-        <!--markdown编辑部分-->
-        <div id = "note">
-            <textarea id="editorContent" 
-                :value="activeNote.content" 
-                v-model="activeNote.content" 
-                @input="updateContent">
-            </textarea>
-        </div>
-        <!--预览-->
-        <div id="preview" v-html="compiledMarkdown"></div>
-        <div id= "lists" v-show = "this.showLists" >
-            <ul>
-                <li v-for = "item in lists">{{item}}</li>
-            </ul>
+    <div id="containor" >
+        <div id = "hoverdiv" ></div>
+        <div id="editor">
+            <!--目录-->
+            <div id= "lists" v-show = "this.showLists" >
+                <ul>
+                    <li v-for = "item in lists">{{item}}</li>
+                </ul>
+            </div>
+            <!--markdown编辑部分-->
+            <div id = "note">
+                <textarea id="editorContent" 
+                    :value="activeNote.content" 
+                    v-model="activeNote.content" 
+                    @input="updateContent">
+                </textarea>
+            </div>
+            <!--预览-->
+            <div id="preview" v-html="compiledMarkdown"></div>
+            
         </div>
     </div>
-</div>
-    
 </template>
 <script>
 import { mapActions ,mapMutations ,mapState} from 'vuex'
@@ -33,7 +34,6 @@ export default {
             showLists : 1
         }
     },
-
     computed: {
         ...mapState([
             'lists',
@@ -144,13 +144,16 @@ export default {
 }
 </script>
 <style lang="less">
+body{
+    overflow: hidden
+}
 #containor{
         width: 100%;
         height: 100%;
         // editor
         #editor {
             margin: 0;
-            height: 97%;
+            height: 100%;
             color: #333;
             font-family: "PT Sans", "Source Sans Pro", sans-serif;
             display: flex;
@@ -216,6 +219,7 @@ export default {
             border:0;
         }
         #lists{
+            // background-color: #f6f6f6;
             li{
                 width: 10rem;
                 color: #3f3f3f;
@@ -233,7 +237,6 @@ export default {
                 background:rgba(134, 127, 127, 0.22);
                 color:#2dbe60;
             }
-            transition: width 1s ease-in-out;
         #hoverdiv{
             height: 100%;
             z-index: 100;

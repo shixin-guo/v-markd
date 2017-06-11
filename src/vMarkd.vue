@@ -1,7 +1,7 @@
 <template>
-    <div id="app" v-bind:style="{ height: this.clientHeight }">
-        <toolbar></toolbar>
-        <editor></editor>
+    <div id="app" v-bind:style = "{height : this.clientHeight}">
+        <toolbar id="toolbar"></toolbar>
+        <editor v-bind:style = "{height: editorHeight }"></editor>
         <sidebar></sidebar>
     </div>
 </template>
@@ -10,17 +10,22 @@
 import toolbar from './components/Toolbar.vue'
 import editor from './components/Editor.vue'
 import sidebar from './components/Sidebar.vue'
-// let clientHeight = document.body.clientHeight;
-let cqlientHeight = window.innerHeight;
+
 export default {
     name: "v-markd",
+    data: function(){
+        return {
+            clientHeight: ( window.innerHeight  ) + "px" ,
+            editorHeight: ""
+        }
+    },
     components: {
         toolbar,
         editor,
         sidebar
     },
-    data: function(){
-        return {clientHeight:cqlientHeight}
+    mounted: function() {
+        this.editorHeight = (window.innerHeight - document.getElementById("toolbar").clientHeight) + "px"
     }
 }
 
@@ -28,9 +33,8 @@ export default {
 <style lang="less">
 *{
      font-family: "PT Sans", "Source Sans Pro", sans-serif;
-}
-body{
-    height: 100%;
+     margin: 0;
+     padding: 0;
 }
 tr {
     display: table-row;
