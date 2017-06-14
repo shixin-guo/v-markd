@@ -1,16 +1,17 @@
 <template>
     <div id="toolbar">
+         <div>
+            <img class = "list" src = "../assets/list.png" 
+            @click = "getList">
+            <img class = "addNote" src = "../assets/addNote.png" 
+            @click = "addNote">
+        </div>
         <input type="text" placeholder="写下标题" class="title" 
             @input = "updateTitle"
             v-model = "activeNote.title"
             :value = "activeNote.title">
         </input>
-        <div>
-            <img class = "addNote" src = "../assets/addNote.png" 
-            @click = "addNote">
-            <img class = "list" src = "../assets/list.png" 
-            @click = "getList">
-        </div>
+       
     </div>
 </template>
 <script>
@@ -36,16 +37,16 @@ export default{
         ])
     } 
 }   
-
 </script>
 <style lang="less">
 #toolbar {
     background-color: #f8f8f8;
     width: 100%;
-    // height: 5%;
+    height: 50px;
     overflow: hidden;
     input,.title{
-        float: left;
+        position: absolute;
+        left: 50%;
         background: none;
         border: none;
         padding: 0;
@@ -55,8 +56,8 @@ export default{
         outline: none;
     }
     .addNote, .list{
-        float: right;
-        margin-right: 20px;
+        float: left;
+        margin-left: 20px;
         margin-top: 5px;
     }
 }

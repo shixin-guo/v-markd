@@ -1,7 +1,7 @@
 <template>
-    <div id="app" v-bind:style = "{height : this.clientHeight}">
+    <div id="app" :style = "{height : this.clientHeight}">
         <toolbar id="toolbar"></toolbar>
-        <editor v-bind:style = "{height: editorHeight }"></editor>
+        <editor :style = "{height: editorHeight }"></editor>
         <sidebar></sidebar>
     </div>
 </template>
@@ -26,6 +26,8 @@ export default {
     },
     mounted: function() {
         this.editorHeight = (window.innerHeight - document.getElementById("toolbar").clientHeight) + "px"
+        console.log(document.getElementById("toolbar").clientHeight);
+        console.log(window.innerHeight)
     }
 }
 

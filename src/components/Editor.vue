@@ -145,7 +145,7 @@ export default {
 </script>
 <style lang="less">
 body{
-    overflow: hidden
+    overflow-y: hidden;
 }
 #containor{
         width: 100%;
@@ -204,7 +204,7 @@ body{
             height: 100%;
             vertical-align: top;
             box-sizing: border-box;
-            padding: 0 20px;
+            padding: 20px;
             background-color: #f6f6f6;
             overflow: scroll;
             img{
@@ -219,6 +219,7 @@ body{
             border:0;
         }
         #lists{
+            overflow: auto;
             // background-color: #f6f6f6;
             li{
                 width: 10rem;
