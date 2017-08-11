@@ -26,8 +26,6 @@ export default {
     },
     mounted: function() {
         this.editorHeight = (window.innerHeight - document.getElementById("toolbar").clientHeight) + "px"
-        console.log(document.getElementById("toolbar").clientHeight);
-        console.log(window.innerHeight)
     }
 }
 

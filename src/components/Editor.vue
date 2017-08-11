@@ -1,11 +1,14 @@
 <template>
-    <div id="containor" >
+    <div id="containor" @click = "ifShowLists($event)">
         <div id = "hoverdiv" ></div>
         <div id="editor">
             <!--目录-->
-            <div id= "lists" v-show = "this.showLists" >
+            <div id= "lists" v-show = this.showLists >
+                <!--@click.stop = "ifshowLists( $event )"-->
                 <ul>
-                    <li v-for = "item in lists">{{item}}</li>
+                    <li v-for = "item in lists">
+                        {{item}}
+                    </li>
                 </ul>
             </div>
             <!--markdown编辑部分-->
@@ -31,7 +34,7 @@ export default {
     name: "editor",
     data: function(){
         return {
-            showLists : 1
+            showLists : false,
         }
     },
     computed: {
@@ -41,6 +44,9 @@ export default {
         ]),
         compiledMarkdown: function () {
             return mdrender.render(this.activeNote.content);
+        },
+        closeLists: function() {
+            this.showLists = !this.showLists;
         }
     },
     methods: {      
@@ -49,6 +55,14 @@ export default {
             'updateContent',
             'getActive'
         ]),
+        ifShowLists: function(event){
+            console.log(0)
+            if(event.id == lists){
+                this.showLists = true;
+            } else {
+                this.showLists = false;
+            }
+        }
     },
     mounted: function(){
         function insertAtCursor(myField, myValue) {
@@ -140,6 +154,16 @@ export default {
                 insertAtCursor(textarea, temp)
             }
         }, false);
+        // 鼠标点击其他非列表处 列表隐藏
+        // const listsView = document.getElementById("lists");
+        // console.log(listsView)
+        // const body = document.body;
+        // body.addEventListener("click", function(e){
+        //     if(e.target !== listsView){
+        //         data.showLists  = (data.showLists + 1)%2;
+        //         console.log(data.showLists)
+        //     }
+        // },false)
     }
 }
 </script>
