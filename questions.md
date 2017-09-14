@@ -10,8 +10,6 @@
 覆层的弹出与修改
 [js 实现 浮层 效果 使用事件冒泡](http://www.cnblogs.com/dolphinX/p/3239530.html)
 
-vue 事件捕获 更改当前activenote
 
-getlist 与 showlists 逻辑区分清晰
 
 

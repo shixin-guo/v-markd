@@ -1,9 +1,9 @@
 const state = {
-    lists:[],
+    lists: [],
     activeNote: {
-        index: "" || 0,
-        title: "",
-        content: ""
-    }
-}
+        index: '' || 0,
+        title: '',
+        content: '',
+    },
+};
 export default state;

@@ -1,26 +1,28 @@
-import markdownIt from 'markdown-it'
-import hljs from "highlight.js"
-import "./../assets/atom-one-light.css"
+import MarkdownIt from 'markdown-it';
+import hljs from 'highlight.js';
+import './../assets/atom-one-light.css';
 
-hljs.initHighlightingOnLoad()
+hljs.initHighlightingOnLoad();
 
-let md = new markdownIt({
+const md = new MarkdownIt({
     html: true,
     xhtmlOut: false,
     breaks: false,
     langPrefix: 'language-',
     linkify: false,
     typographer: false,
-    quotes: '“”‘’',
-    highlight: function (str, lang) {
+    quotes: '',
+    highlight(str, lang) {
         if (lang && hljs.getLanguage(lang)) {
             try {
-                return '<pre class="hljs"><code>' +
-                    hljs.highlight(lang, str, true).value +
-                    '</code></pre>';
-            } catch (__) { }
+                return `<pre class="hljs"><code>${
+                    hljs.highlight(lang, str, true).value
+                }</code></pre>`;
+            } catch (e) {
+                console.log(e);
+            }
         }
-        return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
-    }
+        return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
+    },
 });
-export{ md }
+export default md;

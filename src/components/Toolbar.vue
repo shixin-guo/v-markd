@@ -1,3 +1,7 @@
+/**
+ * @file Toolbar
+ * @author gzponline@163.com
+ */
 <template>
     <div id="toolbar">
          <div>

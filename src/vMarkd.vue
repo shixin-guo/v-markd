@@ -7,9 +7,9 @@
 </template>
 <script>
 // 引入组件
-import toolbar from './components/Toolbar.vue'
-import editor from './components/Editor.vue'
-import sidebar from './components/Sidebar.vue'
+import toolbar from './components/toolbar.vue'
+import editor from './components/editor.vue'
+import sidebar from './components/sidebar.vue'
 
 export default {
     name: "v-markd",

@@ -7,6 +7,8 @@
 
 > a compoment by Vue.js  a markdown editor
 
+target: agile notebook 
+
 ## Build Setup
 - node npm 安装
 - git (可选)

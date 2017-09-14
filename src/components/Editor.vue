@@ -3,14 +3,14 @@
         <div id = "hoverdiv" ></div>
         <div id="editor">
             <!--目录-->
-            <div id= "lists" v-show = this.showLists >
-                <!--@click.stop = "ifshowLists( $event )"-->
+            <div id= "lists" v-show = this.showLists @click="closeLists" >
                 <ul>
-                    <li v-for = "item in lists">
+                    <li v-for ="item in lists">
                         {{item}}
                     </li>
                 </ul>
             </div>
+
             <!--markdown编辑部分-->
             <div id = "note">
                 <textarea id="editorContent" 
@@ -19,6 +19,7 @@
                     @input="updateContent">
                 </textarea>
             </div>
+
             <!--预览-->
             <div id="preview" v-html="compiledMarkdown"></div>
             
@@ -26,13 +27,15 @@
     </div>
 </template>
 <script>
-import { mapActions ,mapMutations ,mapState} from 'vuex'
-import { md as mdrender } from './../config/markdown-it.configs'
+import {mapActions ,mapMutations ,mapState} from 'vuex'
+import mdrender from './../config/markdown-it.configs'
 import {myfirebase} from './../config/firebase.configs'
 import firebase from "firebase"
+import './editor.less'
+
 export default {
     name: "editor",
-    data: function(){
+    data: function() {
         return {
             showLists : false,
         }
@@ -44,10 +47,7 @@ export default {
         ]),
         compiledMarkdown: function () {
             return mdrender.render(this.activeNote.content);
-        },
-        closeLists: function() {
-            this.showLists = !this.showLists;
-        }
+        },      
     },
     methods: {      
         ...mapMutations([
@@ -62,9 +62,12 @@ export default {
             } else {
                 this.showLists = false;
             }
+        },
+        closeLists: function() {
+            this.showLists = !this.showLists;
         }
     },
-    mounted: function(){
+    mounted: function() {
         function insertAtCursor(myField, myValue) {
             //IE support
             if (document.selection) 
@@ -154,119 +157,6 @@ export default {
                 insertAtCursor(textarea, temp)
             }
         }, false);
-        // 鼠标点击其他非列表处 列表隐藏
-        // const listsView = document.getElementById("lists");
-        // console.log(listsView)
-        // const body = document.body;
-        // body.addEventListener("click", function(e){
-        //     if(e.target !== listsView){
-        //         data.showLists  = (data.showLists + 1)%2;
-        //         console.log(data.showLists)
-        //     }
-        // },false)
     }
 }
 </script>
-<style lang="less">
-body{
-    overflow-y: hidden;
-}
-#containor{
-        width: 100%;
-        height: 100%;
-        // editor
-        #editor {
-            margin: 0;
-            height: 100%;
-            color: #333;
-            font-family: "PT Sans", "Source Sans Pro", sans-serif;
-            display: flex;
-            width: 100%;
-        }
-        @placeholderColor: #2dbe60;
-        *::-webkit-input-placeholder {
-            color: @placeholderColor;
-        }
-        *:-moz-placeholder {    
-            color: @placeholderColor;
-        }
-        *:-ms-input-placeholder {
-            /* IE10+ */
-            color: @placeholderColor;
-        }
-        /*左边的编辑栏*/
-        #note{
-            flex: 1;  
-            #editorContent {
-                box-sizing: border-box;
-                width: 100%;
-                height: 100%;
-                border: none;
-                border-right: 1px solid #ccc;
-                resize: none;
-                outline: none;
-                padding: 20px;
-                font-size: 16px;
-                font-family: "PT Sans", sans-serif;
-                line-height: 1.65;
-                letter-spacing: normal;
-                border-radius: 0;
-                color: #5a5a5a;
-                -webkit-box-shadow: none;
-                box-shadow: none;
-                resize: none;
-                border: none;
-                background-color: #fcfcfc;
-            
-            }
-        }
-        /*右边的显示栏*/
-        #preview {
-            display: inline-block;
-            flex: 1;
-            /*width: 50%;*/
-            height: 100%;
-            vertical-align: top;
-            box-sizing: border-box;
-            padding: 20px;
-            background-color: #f6f6f6;
-            overflow: scroll;
-            img{
-                display: inherit;
-                margin: 0 auto;
-            }
-            p { word-wrap:break-word; }
-        }
-        ul{
-            margin:0;
-            padding:0;
-            border:0;
-        }
-        #lists{
-            overflow: auto;
-            // background-color: #f6f6f6;
-            li{
-                width: 10rem;
-                color: #3f3f3f;
-                list-style-type:none;
-                height: 3rem;
-                border-bottom: 2px solid #d9d9d9;
-                line-height: 3.2;
-                padding-left: 30px;
-                padding-right: 30px; 
-                white-space:nowrap;
-                overflow: hidden;
-                text-overflow:ellipsis; 
-            }
-            li:hover{
-                background:rgba(134, 127, 127, 0.22);
-                color:#2dbe60;
-            }
-        #hoverdiv{
-            height: 100%;
-            z-index: 100;
-            position: absolute;
-        }  
-    }
-}
-</style>

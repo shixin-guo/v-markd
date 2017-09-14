@@ -78,7 +78,7 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
+  devtool: '##cheap-module-eval-source-map'
 }
 
 if (process.env.NODE_ENV === 'production') {
