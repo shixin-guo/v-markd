@@ -21,3 +21,5 @@ add lording.gif
 init data wrong
 
 toolbar add editor tools
+
+添加离线功能
