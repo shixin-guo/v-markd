@@ -8,6 +8,9 @@
 > a compoment by Vue.js  a markdown editor
 
 target: agile notebook 
+## 现存问题：
+- firebase 国内被墙 项目过分依赖firebase的数据存储功能
+- 考虑移除状态管理方案（vuex）因为目标是提供一个可插拔的组件，而不是一个网站
 
 ## Build Setup
 - node npm 安装
